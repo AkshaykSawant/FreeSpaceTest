@@ -1,0 +1,40 @@
+import React,{ useState, useRef } from 'react';
+
+export default function App() {
+let [timer,setTimer] = useState(0);
+  let interval = useRef();
+  handleStart = () => {
+    let tmp = setInterval(()=>{
+      setTimer(state=>state+1);
+    },1000)
+    interval.current = tmp;
+  }
+  handleStop = () => {
+    clearInterval(interval.current)
+  }
+  handleReset = () => {
+    clearInterval(interval.current);
+    setTimer(0)
+  }
+  getTime = (s) => {
+    let h = 0,m = 0;
+    if(s > 60) {
+        m =  Math.floor(s/60)
+        s =  s % 60;
+    };
+    if(m > 60) {
+        h =   Math.floor(m / 60)
+        m = m % 60;
+    }
+    return h+':'+m+':'+s
+  }
+  return (
+    <div className='App'>
+      <h1>Hello React.</h1>
+      <h1>{getTime(timer)}</h1>
+      <input type='button' value='Start' onClick={handleStart} />
+      <input type='button' value='Stop' onClick={handleStop}/>
+      <input type='button' value='Reset'onClick={handleReset}/>
+    </div>
+  );
+}
